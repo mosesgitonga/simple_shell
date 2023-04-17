@@ -22,6 +22,8 @@ int main(void)
 	char *line = NULL;
 	char str[] = "BETTY IS PROUD";
 
+	printf("Please Enter a word or Statement: \n");
+
 	nread = getline(&line, &len, stdin);
 
 	if (nread == -1)
