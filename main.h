@@ -11,5 +11,6 @@
 
 
 int display();
+void exit_shell(void);
 #endif
 
