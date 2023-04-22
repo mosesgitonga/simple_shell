@@ -3,14 +3,15 @@
  * handle_path - handling the path using execvp()
  * Return: 0
  */
-int handle_path(void)
+
+void handle_path(void)
 {
 	char *input, *token;
 	size_t input_size = 0;
 	ssize_t read;
 
 	printf(":) ");
-	while (read = getline(&input, &input_size, stdin) != -1)
+	while ((read = getline(&input, &input_size, stdin)) != -1)
 	{
 		char **argv;
 		size_t argc = 0;
@@ -25,11 +26,14 @@ int handle_path(void)
 		}
 		argv[argc] = NULL;
 		pid = fork();
+
+		(argc > 0 && (strcmp(argv[0], "exit") == 0)) ?
+		(free(argv), free(input), exit(EXIT_FAILURE)) : (void)NULL;
 		if (pid == 0)
 		{
 			execvp(argv[0], argv);
 			perror("./shell ");
-			exit(EXIT_FAILURE);
+			exit(0);
 		}
 		else if (pid > 0)
 		{
@@ -43,5 +47,4 @@ int handle_path(void)
 		printf(":) ");
 	}
 	free(input);
-	return (0);
 }

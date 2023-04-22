@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <string.h>
 
-int handle_path();
+void handle_path();
 
 
 int display();
