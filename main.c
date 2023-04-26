@@ -1,52 +1,49 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#define MAX_COMMAND_LENGTH 100
-int main(void) {
-    char command[MAX_COMMAND_LENGTH];
-    char *args[] = { NULL };
-    int status;
-	
+#include "main.h"
 
+/**
+ * main - prompt to our shell
+ * @ac: count of arguments
+ * @argv: list of arguments
+ * @env: list of enviroments
+ *
+ * Return: 0, -1 for exit
+ */
 
-	while (1) 
+int main(int ac, char **argv, char **env)
+{
+	char *prompt = "(shell) $ ";
+	char *command = NULL;
+	size_t n = 0;
+	ssize_t num_chars_read;
+	int flag = 0;
+
+	/* voiding unused vars*/
+	(void)ac;
+
+	while (1)
 	{
-        printf("#cisfun$ ");
-        fflush(stdout);
+		if (isatty(STDIN_FILENO))
+		{
+			flag = 1;
+			print_str(prompt);
+		}
+		num_chars_read = getline(&command, &n, stdin);
 
-        if (fgets(command, MAX_COMMAND_LENGTH, stdin) == NULL) 
-	{
-            break;  
-        }
+		/* checking error cases of getline() - exit conditions */
+		if (num_chars_read == -1)
+		{
+			if (flag == 1)
+				print_str("\n");
+			return (-1);
+		}
 
-        command[strcspn(command, "\n")] = '\0'; 
+		/* Parse and execute the command*/
+		parse(command, num_chars_read, env);
+	}
+	free(command);
+	_free(argv);
+	_free(env);
 
-        if (strcmp(command, "exit") == 0) 
-	{
-            break;
-        }
-
-        pid_t pid = fork();
-
-        if (pid == -1) 
-	{
-            perror("fork");
-            exit(EXIT_FAILURE);
-        }
-
-        if (pid == 0) 
-	{
-            execve(command, args, NULL);
-            perror("./shell"); 
-
-            exit(EXIT_FAILURE);
-        }
-
-        wait(&status);
-    }
-
-    return 0;
+	return (0);
 }
 

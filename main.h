@@ -1,16 +1,41 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-extern char **environ;
+#include <string.h>
 #include <stddef.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <limits.h>
+#include <sys/stat.h>
 #include <sys/types.h>
-extern char **environ;
-int display();
+#include <sys/wait.h>
+#include <signal.h>
+#include <errno.h>
 
-void simple_shell(char **av, char **env);
+
+/* execution */
+char *_getenv(char *, char **);
+void execute(char **, char **);
+char *get_location(char *, char **);
+void _free(char **);
+
+/* parsing */
+void parse(char *, ssize_t, char **);
+void exit_cmd(char *);
+int valid_cmd(char *);
+int env_cmd(char *, char **);
+
+/* string functions */
+int print_str(char *);
+int _strcmp(char *, char *);
+int _strlen(char *);
+char *_strcat(char *, char *);
+char *_strcpy(char *, char *);
+int _strncmp(char *, char *, int);
+char *_strdup(char *);
+char *_strcpy_at(char *, char *, int);
 
 #endif
+
+
