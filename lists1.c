@@ -1,122 +1,270 @@
 #include "shell.h"
-
+/*********************/
 /**
- * list_len - determines length of linked list
- * @h: pointer to first node
+ * list_len-hhhlist
+ * @h:first node
  *
- * Return: size of list
+*hvbhj
+ * Return:list
  */
-size_t list_len(const list_t *h)
-{
-	size_t i = 0;
 
-	while (h)
+/*******************************************/
+size_t list_len(const list_t *p)
+{
+	size_t j = 0;
+
+/*************************************/
+
+	while (p)
 	{
-		h = h->next;
-		i++;
+	
+/*****/
+
+		p = p->next;
+		j++;
+
+/**********/
+
 	}
-	return (i);
+	return (j);
+
+
 }
 
 /**
- * list_to_strings - returns an array of strings of the list->str
- * @head: pointer to first node
+ * list_to_strings - Returns an arr
+ * @head: first node
  *
- * Return: array of strings
+ * Return: strings
  */
-char **list_to_strings(list_t *head)
+char **list_to_strings(list_t *h)
 {
-	list_t *node = head;
-	size_t i = list_len(head), j;
-	char **strs;
+
+
+/************/
+	list_t *node  =   h;
+	size_t i =    list_len(h), j;
+/***********************************************/
+	char **st;
 	char *str;
 
-	if (!head || !i)
+
+
+
+
+
+
+/********************************/
+
+	if (!h   || !i)
 		return (NULL);
-	strs = malloc(sizeof(char *) * (i + 1));
-	if (!strs)
+	st = malloc(sizeof(char *) * (i + 1));
+
+
+
+
+
+	if (!st)
 		return (NULL);
 	for (i = 0; node; node = node->next, i++)
+
+
+
+
+/******************************/
 	{
 		str = malloc(_strlen(node->str) + 1);
 		if (!str)
 		{
+
+
+
+
+
+
+
+
+
+
+
+
+
 			for (j = 0; j < i; j++)
-				free(strs[j]);
-			free(strs);
+				
+
+
+				free(st[j]);
+	
+/*********************************************************/
+
+
+			free(st);
 			return (NULL);
+
+
+
+
+/********/
 		}
 
+
+
+
+
+
 		str = _strcpy(str, node->str);
-		strs[i] = str;
+
+
+
+
+
+
+/**/
+
+		st[i] = str;
 	}
-	strs[i] = NULL;
-	return (strs);
+
+
+
+
+
+
+	st[i] = NULL;
+
+
+
+/*dfghjkgygyugcgfcfcxxfxfcfcfxds*/
+	return (st);
 }
 
 
+
+
 /**
- * print_list - prints all elements of a list_t linked list
- * @h: pointer to first node
+ * print_list-list_tnm linked list
+ * @h: node
  *
- * Return: size of list
+ * Return: size list
  */
-size_t print_list(const list_t *h)
+size_t print_list(const list_t *l)
+
+/***/
+
 {
 	size_t i = 0;
 
-	while (h)
+	while (l)
+
+
+
+
 	{
-		_puts(convert_number(h->num, 10, 0));
+		_puts(convert_number(l->num, 10, 0));
+	/*****/
+
+
 		_putchar(':');
 		_putchar(' ');
-		_puts(h->str ? h->str : "(nil)");
+/***********************************************************/
+
+
+		_puts(l->str ? l->str : "(nil)");
 		_puts("\n");
-		h = h->next;
+
+/*****************************************************/
+
+		l = l->next;
 		i++;
+
 	}
+
+/*************************************************/
 	return (i);
 }
 
 /**
- * node_starts_with - returns node whose string starts with prefix
- * @node: pointer to list head
- * @prefix: string to match
- * @c: the next character after prefix to match
+ * node_starts_with - Retunwhose string starts with prefix
+ * @node:head
+ * @prefix:str
+ * @c:next
  *
- * Return: match node or null
+ * Return: match
  */
-list_t *node_starts_with(list_t *node, char *prefix, char c)
-{
-	char *p = NULL;
 
-	while (node)
+/**HGGGGLKDD*/
+list_t *node_starts_with(list_t *boo, char *prefix, char c)
+{
+	char *x = NULL;
+
+
+/**/
+	while (boo)
+
+/*****************************************************/
+
 	{
-		p = starts_with(node->str, prefix);
-		if (p && ((c == -1) || (*p == c)))
-			return (node);
-		node = node->next;
+		x = starts_with(boo->str, prefix);
+
+
+
+
+
+
+/***/
+
+		if (x && ((c == -1) || (*x == c)))
+/***/
+
+			return (boo);
+		boo = boo->next;
 	}
+
 	return (NULL);
 }
 
 /**
- * get_node_index - gets the index of a node
- * @head: pointer to list head
- * @node: pointer to the node
+ * get_node_index-index of a node
+ * @head:head
+*
+***
+ * @node: node
  *
- * Return: index of node or -1
+ * Return: -1
  */
-ssize_t get_node_index(list_t *head, list_t *node)
+
+
+
+ssize_t get_node_index(list_t *h, list_t *n)
+
+
+
+
 {
+
+
 	size_t i = 0;
 
-	while (head)
+	/************************************/
+	while (h)
+
+
+/**/
 	{
-		if (head == node)
+		if (h == n)
 			return (i);
-		head = head->next;
+
+
+
+
+
+
+		h = h->next;
+
+
 		i++;
 	}
+
+
+/**/
 	return (-1);
 }
