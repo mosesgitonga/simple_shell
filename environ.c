@@ -5,7 +5,7 @@
 
 /**
  * _myenv - printing env
- * @info: Structure 
+ * @infoma: Structure 
  * Return: 0
  */
 int _myenv(info_t *infoma)
@@ -23,7 +23,7 @@ int _myenv(info_t *infoma)
 /**
  * _getenv - val
  * @info:struct
- * @name:vat
+ * @itsname:vat
 *
 *
  *
@@ -57,7 +57,7 @@ char *_getenv(info_t *infom, const char *itsname)
 
 /**
  * _mysetenv -mysentenv
- * @info: Structure arg
+ * @infom: Structure arg
  *  Return: 0
  */
 int _mysetenv(info_t *infom)
@@ -82,7 +82,7 @@ int _mysetenv(info_t *infom)
 
 /**
  * _myunsetenv - rem env
- * @info: Structo poten args
+ * @infomat: Structo poten args
  *  Return: 0
  */
 
@@ -109,7 +109,7 @@ int _myunsetenv(info_t *infomat)
 
 /**
  * populate_env_list - linked listi
- * @info: Stuct of poten arggs
+ * @infomax: Stuct of poten arggs
  * Return: 0
  */
 int populate_env_list(info_t *infomax)
