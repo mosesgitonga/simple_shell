@@ -6,7 +6,9 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <stddef.h>
+#include <sys/types.h>
 
-
+int simple_shell(int ac, char **argv);
 
 #endif
