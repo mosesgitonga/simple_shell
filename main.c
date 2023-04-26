@@ -1,6 +1,9 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "main.h"
 
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **envp)
 {
-	return (simple_shell(argc, argv));
+    simple_shell(argv, envp);
+    return 0;
 }
