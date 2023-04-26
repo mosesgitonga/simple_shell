@@ -1,49 +1,44 @@
-#include "main.h"
+#include "shell.h"
 
 /**
- * main - prompt to our shell
- * @ac: count of arguments
- * @argv: list of arguments
- * @env: list of enviroments
+ * main - entry point
+ * @ac: arg count
+ * @av: arg vector
  *
- * Return: 0, -1 for exit
+ * Return: 0 on success, 1 on error
  */
-
-int main(int ac, char **argv, char **env)
+int main(int ac, char **av)
 {
-	char *prompt = "(shell) $ ";
-	char *command = NULL;
-	size_t n = 0;
-	ssize_t num_chars_read;
-	int flag = 0;
+	info_t info[] = { INFO_INIT };
+	int fd = 2;
 
-	/* voiding unused vars*/
-	(void)ac;
+	asm ("mov %1, %0\n\t"
+		"add $3, %0"
+		: "=r" (fd)
+		: "r" (fd));
 
-	while (1)
+	if (ac == 2)
 	{
-		if (isatty(STDIN_FILENO))
+		fd = open(av[1], O_RDONLY);
+		if (fd == -1)
 		{
-			flag = 1;
-			print_str(prompt);
+			if (errno == EACCES)
+				exit(126);
+			if (errno == ENOENT)
+			{
+				_eputs(av[0]);
+				_eputs(": 0: Can't open ");
+				_eputs(av[1]);
+				_eputchar('\n');
+				_eputchar(BUF_FLUSH);
+				exit(127);
+			}
+			return (EXIT_FAILURE);
 		}
-		num_chars_read = getline(&command, &n, stdin);
-
-		/* checking error cases of getline() - exit conditions */
-		if (num_chars_read == -1)
-		{
-			if (flag == 1)
-				print_str("\n");
-			return (-1);
-		}
-
-		/* Parse and execute the command*/
-		parse(command, num_chars_read, env);
+		info->readfd = fd;
 	}
-	free(command);
-	_free(argv);
-	_free(env);
-
-	return (0);
+	populate_env_list(info);
+	read_history(info);
+	hsh(info, av);
+	return (EXIT_SUCCESS);
 }
-
