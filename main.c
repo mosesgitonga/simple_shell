@@ -1,60 +1,52 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-
-
-
-
-
-
-#define PROMPT "#cisfun$ "
-
-void execute(char *commandd) 
-{
-    char *argv[] = {commandd, NULL};
-
-    if (execve(commandd, argv, NULL) == -1) 
-    {
-        perror("./shell: ");
-    }
-}
-
+#define MAX_COMMAND_LENGTH 100
 int main(void) {
-    char *input = NULL;
-    size_t input_size = 0;
-    pid_t pid;
+    char command[MAX_COMMAND_LENGTH];
+    char *args[] = { NULL };
     int status;
+	
 
-    while (1) 
-    {
-        printf(PROMPT);
-        if (getline(&input, &input_size, stdin) == -1) 
+
+	while (1) 
 	{
+        printf("#cisfun$ ");
+        fflush(stdout);
 
-            printf("\n");
+        if (fgets(command, MAX_COMMAND_LENGTH, stdin) == NULL) 
+	{
+            break;  
+        }
+
+        command[strcspn(command, "\n")] = '\0'; 
+
+        if (strcmp(command, "exit") == 0) 
+	{
             break;
         }
-	input[strcspn(input, "\n")] = '\0'; 
 
-        pid = fork();
+        pid_t pid = fork();
+
         if (pid == -1) 
 	{
-            perror("Error");
+            perror("fork");
             exit(EXIT_FAILURE);
-        } else if (pid == 0) 
-	{
-            execute(input);
-            exit(EXIT_SUCCESS);
-        } 
-	else 
-	{
-            waitpid(pid, &status, 0);
         }
+
+        if (pid == 0) 
+	{
+            execve(command, args, NULL);
+            perror("./shell"); 
+
+            exit(EXIT_FAILURE);
+        }
+
+        wait(&status);
     }
 
-    free(input);
-    return (EXIT_SUCCESS);
+    return 0;
 }
 
