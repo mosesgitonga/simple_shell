@@ -1,7 +1,6 @@
 #include "main.h"
 
-int main()
+int main(int argc, char **argv)
 {
-	display();
-	return (0);
+	return (simple_shell(argc, argv));
 }
