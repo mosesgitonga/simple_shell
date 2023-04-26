@@ -1,16 +1,17 @@
 #ifndef MAIN_H
 #define MAIN_H
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
-#include <sys/wait.h>
 #include <unistd.h>
-#include <string.h>
+#include <sys/wait.h>
+#include <stddef.h>
+#include <sys/types.h>
 extern char **environ;
-
-void handle_path();
-void print_env(void);
+int simple_shell(int ac, char **argv);
 int display();
-void exit_shell(void);
-#endif
 
+int simple_shell(int ac, char **argv);
+
+
+#endif
