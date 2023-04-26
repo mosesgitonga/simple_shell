@@ -21,6 +21,8 @@ int simple_shell(int ac, char **argv)
 	char *token;
 	char **args;
 	pid_t pid;
+	int i, num_args;
+
 	(void)ac;
 	(void)argv;
 
@@ -37,20 +39,39 @@ int simple_shell(int ac, char **argv)
 			free(input);
 		}
 		/*remove \n from the input*/
-		input[strcspn(input, "\n")] = 0;
-
+		input[strcspn(input, "\n")] = '\0';
+		
+		num_args = 0;
 		token = strtok(input, " ");
 		
-		if (token == NULL)
+		while (token != NULL)
 		{
-			continue;
+			num_args++;
+			token = strtok(NULL, " ");
 		}
+		args = malloc(sizeof(char *) * (num_args + 1));
+		if (args == NULL)
+		{
+			perror("malloc");
+			exit(1);
+		}
+		token = strtok(input, " ");
+		i = 0;
+		
+		while (token != NULL)
+		{
+			args[i] = token;
+			token = strtok(NULL, " ");
+			i++;
+		}
+		args[num_args] = NULL;
 		/*Execute command*/
 		pid = fork();
+		
 		if (pid == 0)
 		{
 			execve(args[0], args, NULL);
-			printf("Error: command not found.\n");
+			perror("execve");
 			exit(1);
 		}
 		else if (pid > 0)
@@ -59,9 +80,10 @@ int simple_shell(int ac, char **argv)
 		}
 		else
 		{
-			printf("Error: fork failed");
+			perror("fork");
 			exit(1);
 		}
+		free(args);
 	}
 	return (0);
 }
