@@ -19,10 +19,7 @@ int simple_shell(int ac, char **argv)
 	char *token;
 	char **args;
 	pid_t pid;
-<<<<<<< HEAD
 	int i, num_args;
-=======
->>>>>>> 5fcee5e69e03d0bbb2d45e25e45e96c9d057c456
 
 	(void)ac;
 	(void)argv;
@@ -37,7 +34,6 @@ int simple_shell(int ac, char **argv)
 			exit(0);
 			free(input);
 		}
-<<<<<<< HEAD
 		/*remove \n from the input*/
 		input[strcspn(input, "\n")] = '\0';
 		
@@ -66,25 +62,6 @@ int simple_shell(int ac, char **argv)
 		}
 		args[num_args] = NULL;
 		/*Execute command*/
-=======
-		input[strcspn(input, "\n")] = 0;
-		args = malloc(sizeof(char *) * 64);
-		token = strtok(input, " \n");
-		int i = 0;
-		while (token != NULL)
-		{
-			args[i++] = token;
-			token = strtok(NULL, " \n");
-		}
-		args[i] = NULL;
-
-		if (args[0] == NULL)
-		{
-			free(args);
-			continue;
-		}
-
->>>>>>> 5fcee5e69e03d0bbb2d45e25e45e96c9d057c456
 		pid = fork();
 		
 		if (pid == 0)
