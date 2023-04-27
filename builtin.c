@@ -1,7 +1,10 @@
 #include "shell.h"
 
 /**
- * _myexit - function that exits the shell
+* 
+*mmmm
+*
+* _myexit - function that exits the shell
  * @info: Struct containg args
  * Return:0
 
