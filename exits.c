@@ -1,124 +1,54 @@
 #include "shell.h"
 
-/**
- **_strncpy - strcpy
- *@final: dest
- *@begin: string source
- *@n: char amount
- *Return: string
- */
-
-char *_strncpy(char *final, char *begin, int n)
+char *_strncpy(char *dest, char *src, int n)
 {
-
-
 	int i, j;
-
-
-	char *s = final;
+	char *s = dest;
 
 	i = 0;
-
-
-
-	while (begin[i] != '\0' && i < n - 1)
+	while (src[i] != '\0' && i < n - 1)
 	{
-
-
-		final[i] = begin[i];
+		dest[i] = src[i];
 		i++;
 	}
 	if (i < n)
-
-
-
 	{
 		j = i;
-
-
 		while (j < n)
-
-
-
-
 		{
-			final[j] = '\0';
-
+			dest[j] = '\0';
 			j++;
 		}
-
-
 	}
 	return (s);
 }
 
-/**
- **_strncat - string
- *@dest: 1st  string
- *@src:2nd string
- *@n: memory
- *Return: char
- */
-char *_strncat(char *final, char *begin, int n)
-
+char *_strncat(char *dest, char *src, int n)
 {
 	int i, j;
-
-	char *s = final;
+	char *s = dest;
 
 	i = 0;
-
-
 	j = 0;
-
-	while (final[i] != '\0')
-
-
+	while (dest[i] != '\0')
 		i++;
-
-
-
-	while (begin[j] != '\0' && j < n)
+	while (src[j] != '\0' && j < n)
 	{
-
-
-
-		final[i] = begin[j];
-
+		dest[i] = src[j];
 		i++;
-
-
 		j++;
 	}
-
-
 	if (j < n)
-		final[i] = '\0';
-
-
-
+		dest[i] = '\0';
 	return (s);
 }
 
-/**
- **_strchr -string
-*
- *@str:string to be parsed
- *@ch:character to look for
- *Return:s a pointer 
- */
-char *_strchr(char *str, char ch)
+char *_strchr(char *s, char c)
 {
-
-	do 
-	
-
-	{
-		if (*str == ch)
-			return (str);
-	} while (*str++ != '\0');
-
-
+	do {
+		if (*s == c)
+			return (s);
+	} while (*s++ != '\0');
 
 	return (NULL);
 }

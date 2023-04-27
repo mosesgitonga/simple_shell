@@ -1,141 +1,70 @@
 #include "shell.h"
 
-/**
- * get_environ - string
- * @cont: Struc
- * Return:0
-
-
- */
-char **get_environ(info_t *cont)
+char **get_environ(info_t *info)
 {
-
-
-	if (!cont->environ || cont->env_changed)
+	if (!info->environ || info->env_changed)
 	{
-		cont->environ = list_to_strings(cont->env);
-
-/* ------------------------------------------------------------------------------------*/
-
-
-
-		cont->env_changed = 0;
+		info->environ = list_to_strings(info->env);
+		info->env_changed = 0;
 	}
 
-/*======================================================================================*/
-
-	return (cont->environ);
+	return (info->environ);
 }
-
-/**
- * _unsetenv - env
- * @cont: info
- * @alp: the string env var property
- *Return: 0;
- */
-int _unsetenv(info_t *cont, char *alp)
+int _unsetenv(info_t *info, char *var)
 {
-
-
-	list_t *node = cont->env;
+	list_t *node = info->env;
 	size_t i = 0;
-
-
 	char *p;
 
-	if (!node || !alp)
-
-
+	if (!node || !var)
 		return (0);
 
 	while (node)
-
-
 	{
-		p = starts_with(node->str, alp);
-
-
+		p = starts_with(node->str, var);
 		if (p && *p == '=')
 		{
-			cont->env_changed = delete_node_at_index(&(cont->env), i);
-
-
+			info->env_changed = delete_node_at_index(&(info->env), i);
 			i = 0;
-			node = cont->env;
-
-
+			node = info->env;
 			continue;
 		}
-
-
 		node = node->next;
 		i++;
 	}
-
-	return (cont->env_changed);
+	return (info->env_changed);
 }
 
-/**
- * _setenv - env
- * @cont: Struc
- * @alp: var
- * @dig:value
- *  Return: 0
- */
-
-
-int _setenv(info_t *cont, char *alp, char *dig)
+int _setenv(info_t *info, char *var, char *value)
 {
 	char *buf = NULL;
-
 	list_t *node;
 	char *p;
 
-
-	if (!alp || !dig)
-	
-
+	if (!var || !value)
 		return (0);
 
-	
-	buf = malloc(_strlen(alp) + _strlen(dig) + 2);
-	
-
+	buf = malloc(_strlen(var) + _strlen(value) + 2);
 	if (!buf)
 		return (1);
-	
-	_strcpy(buf, alp);
+	_strcpy(buf, var);
 	_strcat(buf, "=");
-	_strcat(buf, dig);
-		
-
-	node = cont->env;
-	
+	_strcat(buf, value);
+	node = info->env;
 	while (node)
 	{
-		p = starts_with(node->str, alp);
-	
-
+		p = starts_with(node->str, var);
 		if (p && *p == '=')
 		{
 			free(node->str);
-	
-
 			node->str = buf;
-			cont->env_changed = 1;
+			info->env_changed = 1;
 			return (0);
 		}
-	
-
 		node = node->next;
-	
-
 	}
-	
-	add_node_end(&(cont->env), buf, 0);
+	add_node_end(&(info->env), buf, 0);
 	free(buf);
-	
-
-	cont->env_changed = 1;
+	info->env_changed = 1;
 	return (0);
 }
