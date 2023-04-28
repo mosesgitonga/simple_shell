@@ -15,10 +15,9 @@ char *_strcpy(char *dest, char *src)
 	{
 		return (dest);
 	}
-	while (src[i])
+	for (; src[i]; i++)
 	{
 		dest[i] = src[i];
-		i++;
 	}
 	dest[i] = 0;
 	return (dest);
@@ -39,16 +38,17 @@ char *_strdup(const char *str)
 	{
 		return (NULL);
 	}
-	while (*str++)
+	for (; *str; length++)
 	{
-		length++;
+		str++;
 	}
 	ret = malloc(sizeof(char) * (length + 1));
 	if (!ret)
 	{
 		return (NULL);
 	}
-	for (length++; length--;)
+	length++;
+	while (length--)
 	{
 		ret[length] = *--str;
 	}
@@ -69,10 +69,9 @@ void _puts(char *str)
 	{
 		return;
 	}
-	while (str[i] != '\0')
+	for (; str[i] != '\0'; i++)
 	{
 		_putchar(str[i]);
-		i++;
 	}
 }
 
