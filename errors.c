@@ -1,90 +1,85 @@
 #include "shell.h"
 
 /**
- * _eputs - prints string
- * @str: string to print
+ *_eputs - prints an input string
+ * @str: the string to be printed
  *
+ * Return: Nothing
  */
-void _eputs(char *STR)
+void _eputs(char *str)
 {
-	int i;
+	int i = 0;
 
-	if (!STR)
+	if (!str)
 		return;
-
-	for (i = 0; STR[i]; i++)
-		_eputchar(STR[i]);
+	while (str[i] != '\0')
+	{
+		_eputchar(str[i]);
+		i++;
+	}
 }
 
 /**
- * _eputchar - print char to stderr
- * @c: char to print
+ * _eputchar - writes the character c to stderr
+ * @c: The character to print
  *
- * Return: 1
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
  */
 int _eputchar(char c)
 {
-	static int x;
+	static int i;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || x >= WRITE_BUF_SIZE)
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		if (write(2, buf, x) == -1)
-			return (-1);
-		x = 0;
+		write(2, buf, i);
+		i = 0;
 	}
-
 	if (c != BUF_FLUSH)
-		buf[x++] = c;
-
+		buf[i++] = c;
 	return (1);
 }
 
 /**
- * _putfd -RITE CHAR TO FD
- * @c: CHAR
- * @fd:FILE DESCRIPTOR
+ * _putfd - writes the character c to given fd
+ * @c: The character to print
+ * @fd: The filedescriptor to write to
  *
- * Return: 1 
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
  */
 int _putfd(char c, int fd)
 {
-	static int X;
+	static int i;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || X >= WRITE_BUF_SIZE)
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		if (write(fd, buf, X) == -1)
-			return (-1);
-		X = 0;
+		write(fd, buf, i);
+		i = 0;
 	}
-
 	if (c != BUF_FLUSH)
-		buf[X++] = c;
-
+		buf[i++] = c;
 	return (1);
 }
 
 /**
- * _putsfd - printING
- * @str:STR
- * @fd: FILE DESCR
+ *_putsfd - prints an input string
+ * @str: the string to be printed
+ * @fd: the filedescriptor to write to
  *
- * Return: 0
+ * Return: the number of chars put
  */
 int _putsfd(char *str, int fd)
 {
-    int j = 0;
+	int i = 0;
 
-    if (!str)
-        return (0);
-
-    while (str[j])
-    {
-        if (_putfd(str[j], fd) == -1)
-            return (-1);
-        j++;
-    }
-
-    return (j);
+	if (!str)
+		return (0);
+	while (*str)
+	{
+		i += _putfd(*str++, fd);
+	}
+	return (i);
 }

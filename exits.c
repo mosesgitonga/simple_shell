@@ -1,65 +1,74 @@
 #include "shell.h"
 
 /**
- * _strncpy-cp a str
- * @dest:desTInation
- * @src:source of string
- * @n:num of chars
- * Return: str
+ **_strncpy - copies a string
+ *@dest: the destination string to be copied to
+ *@src: the source string
+ *@n: the amount of characters to be copied
+ *Return: the concatenated string
  */
 char *_strncpy(char *dest, char *src, int n)
 {
-	int i = 0, j = 0;
+	int i, j;
 	char *s = dest;
 
-	for (i = 0; i < n - 1 && src[i]; i++)
-	
+	i = 0;
+	while (src[i] != '\0' && i < n - 1)
+	{
 		dest[i] = src[i];
-	for (j = i; j < n; j++)
-		dest[j] = '\0';
+		i++;
+	}
+	if (i < n)
+	{
+		j = i;
+		while (j < n)
+		{
+			dest[j] = '\0';
+			j++;
+		}
+	}
 	return (s);
 }
 
 /**
- * _strncat -concat str
- * @dest:1st str
- * @src:2nd str
- * @n: mem
- * Return:str
+ **_strncat - concatenates two strings
+ *@dest: the first string
+ *@src: the second string
+ *@n: the amount of bytes to be maximally used
+ *Return: the concatenated string
  */
 char *_strncat(char *dest, char *src, int n)
 {
-	int i = 0, j = 0;
+	int i, j;
 	char *s = dest;
 
-
-
-	while (dest[i])
+	i = 0;
+	j = 0;
+	while (dest[i] != '\0')
 		i++;
-	for (j = 0; src[j] && j < n; j++, i++)
+	while (src[j] != '\0' && j < n)
+	{
 		dest[i] = src[j];
-	dest[i] = '\0';
+		i++;
+		j++;
+	}
+	if (j < n)
+		dest[i] = '\0';
 	return (s);
 }
 
 /**
- * _strchr -string char
- * @s:string
- * @c: char
- * Return:pointer
+ **_strchr - locates a character in a string
+ *@s: the string to be parsed
+ *@c: the character to look for
+ *Return: (s) a pointer to the memory area s
  */
 char *_strchr(char *s, char c)
 {
-	while (*s)
-	{
+	do {
 		if (*s == c)
-		
-
 			return (s);
-		s++;
-	}
-	if (c == '\0')
-		return (s);
+	} while (*s++ != '\0');
+
 	return (NULL);
 }
-

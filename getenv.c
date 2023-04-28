@@ -21,8 +21,8 @@ char **get_environ(info_t *info)
  * _unsetenv - Remove an environment variable
  * @info: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
+ *  Return: 1 on delete, 0 otherwise
  * @var: the string env var property
- * Return: 1 on delete, 0 otherwise
  */
 int _unsetenv(info_t *info, char *var)
 {
@@ -30,13 +30,14 @@ int _unsetenv(info_t *info, char *var)
 	size_t i = 0;
 	char *p;
 
-	if (!node || !var) {
+	if (!node || !var)
 		return (0);
-	}
 
-	while (node) {
+	while (node)
+	{
 		p = starts_with(node->str, var);
-		if (p && *p == '=') {
+		if (p && *p == '=')
+		{
 			info->env_changed = delete_node_at_index(&(info->env), i);
 			i = 0;
 			node = info->env;
@@ -55,7 +56,7 @@ int _unsetenv(info_t *info, char *var)
  *        constant function prototype.
  * @var: the string env var property
  * @value: the string env var value
- * Return: Always 0
+ *  Return: Always 0
  */
 int _setenv(info_t *info, char *var, char *value)
 {
@@ -63,21 +64,21 @@ int _setenv(info_t *info, char *var, char *value)
 	list_t *node;
 	char *p;
 
-	if (!var || !value) {
+	if (!var || !value)
 		return (0);
-	}
 
 	buf = malloc(_strlen(var) + _strlen(value) + 2);
-	if (!buf) {
+	if (!buf)
 		return (1);
-	}
 	_strcpy(buf, var);
 	_strcat(buf, "=");
 	_strcat(buf, value);
 	node = info->env;
-	while (node) {
+	while (node)
+	{
 		p = starts_with(node->str, var);
-		if (p && *p == '=') {
+		if (p && *p == '=')
+		{
 			free(node->str);
 			node->str = buf;
 			info->env_changed = 1;
@@ -90,4 +91,3 @@ int _setenv(info_t *info, char *var, char *value)
 	info->env_changed = 1;
 	return (0);
 }
-
