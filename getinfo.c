@@ -1,8 +1,8 @@
 #include "shell.h"
 
 /**
- * clear_info - initializes info_t struct
- * @info: struct address
+ * clear_info - sls
+ * @info: struct addr
  */
 void clear_info(info_t *info)
 {
@@ -13,13 +13,13 @@ void clear_info(info_t *info)
 }
 
 /**
- * set_info - initializes info_t struct
+ * set_info - init
  * @info: struct address
- * @av: argument vector
+ * @av: arg vector
  */
 void set_info(info_t *info, char **av)
 {
-	int i = 0;
+	int i;
 
 	info->fname = av[0];
 	if (info->arg)
@@ -27,15 +27,14 @@ void set_info(info_t *info, char **av)
 		info->argv = strtow(info->arg, " \t");
 		if (!info->argv)
 		{
-
-			info->argv = malloc(sizeof(char *) * 2);
+			info->argv = malloc(sizeof(char *));
 			if (info->argv)
 			{
 				info->argv[0] = _strdup(info->arg);
 				info->argv[1] = NULL;
 			}
 		}
-		for (i = 0; info->argv && info->argv[i]; i++)
+		for (i = 0; info->argv && info->argv[i]; ++i)
 			;
 		info->argc = i;
 
@@ -45,9 +44,9 @@ void set_info(info_t *info, char **av)
 }
 
 /**
- * free_info - frees info_t struct fields
- * @info: struct address
- * @all: true if freeing all fields
+ * free_info - free
+ * @info: struct addr
+ * @all: true
  */
 void free_info(info_t *info, int all)
 {
@@ -65,7 +64,7 @@ void free_info(info_t *info, int all)
 		if (info->alias)
 			free_list(&(info->alias));
 		ffree(info->environ);
-			info->environ = NULL;
+		info->environ = NULL;
 		bfree((void **)info->cmd_buf);
 		if (info->readfd > 2)
 			close(info->readfd);

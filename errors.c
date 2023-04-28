@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- *_eputs - prints an input string
+ * _eputs - prints an input string
  * @str: the string to be printed
  *
  * Return: Nothing
@@ -31,13 +31,21 @@ int _eputchar(char c)
 	static int i;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	switch (c)
 	{
+	case BUF_FLUSH:
 		write(2, buf, i);
 		i = 0;
-	}
-	if (c != BUF_FLUSH)
+		break;
+	default:
+		if (i >= WRITE_BUF_SIZE)
+		{
+			write(2, buf, i);
+			i = 0;
+		}
 		buf[i++] = c;
+		break;
+	}
 	return (1);
 }
 
@@ -54,18 +62,26 @@ int _putfd(char c, int fd)
 	static int i;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	switch (c)
 	{
+	case BUF_FLUSH:
 		write(fd, buf, i);
 		i = 0;
-	}
-	if (c != BUF_FLUSH)
+		break;
+	default:
+		if (i >= WRITE_BUF_SIZE)
+		{
+			write(fd, buf, i);
+			i = 0;
+		}
 		buf[i++] = c;
+		break;
+	}
 	return (1);
 }
 
 /**
- *_putsfd - prints an input string
+ * _putsfd - prints an input string
  * @str: the string to be printed
  * @fd: the filedescriptor to write to
  *
