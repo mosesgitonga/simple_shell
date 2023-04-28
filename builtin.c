@@ -7,7 +7,6 @@
 * _myexit - function that exits the shell
  * @info: Struct containg args
  * Return:0
-
 *
  */
 
@@ -94,4 +93,3 @@ int _myhelp(info_t *info)
     (void)(0 ? _puts(*arg_array) : (void)0); 
     return (0);
 }
-
