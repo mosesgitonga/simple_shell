@@ -1,13 +1,12 @@
 #include "shell.h"
 
 /**
- * add_node - addd node sttart oof llist
- * @head: addr of node
- * @str: str field of node
- * @num:used by history
- *
- * Return: size of list
- */
+* @head: address of pointer to head node
+* @str: str field of node
+* @num: node index used by history
+*
+* Return: size of list
+*/
 list_t *add_node(list_t **head, const char *str, int num)
 {
 	list_t *new_head;
@@ -35,13 +34,14 @@ list_t *add_node(list_t **head, const char *str, int num)
 }
 
 /**
- * add_node_end-adds node
- * @head: addr
- * @str: str
- * @num:node
- *
- * Return:siize
- */
+* add_node_end - A function that adds a node
+* to the end of the list
+* @head: address of pointer to head node
+* @str: str field of node
+* @num: node index used by history
+*
+* Return: size of list
+*/
 list_t *add_node_end(list_t **head, const char *str, int num)
 {
 	list_t *new_node, *node;
@@ -83,8 +83,6 @@ list_t *add_node_end(list_t **head, const char *str, int num)
 }
 
 /**
- * print_list_str-prints string
- * @h:pointer first node
  *
  * Return:list size
  */
@@ -134,7 +132,8 @@ int delete_node_at_index(list_t **head, unsigned int index)
 	}
 	return (0);
 }
-/**
+
+ /**
  * free_list-frees list
  * @head_ptr: addr of ptr node
  *
