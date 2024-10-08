@@ -5,7 +5,6 @@ https://s3.amazonaws.com/intranet-projects-files/holbertonschool-low_level_progr
 
 
 ^ “The Gates of hell”,
-Resources
 
 
 Example of error with sh:
